@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust | Explore the World</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo"><i class="fa-solid fa-compass"></i> Wanderlust</a>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#categories">Categories</a>
+                <a href="#featured">Featured</a>
+                <a href="#destinations">Destinations</a>
+            </nav>
+
+            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 1. Home / Hero Section (Includes Carousel Slider) -->
+    <section id="hero" class="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80');"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1>Discover Extraordinary Destinations</h1>
+            <p>Uncover hidden gems, iconic landmarks, and unforgettable experiences across the globe.</p>
+            <a href="#destinations" class="btn btn-primary">Explore Destinations</a>
+        </div>
+
+        <div class="slider-controls">
+            <button id="prevSlide"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="nextSlide"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- 5. About Section -->
+    <section id="about" class="section about-section">
+        <div class="container about-grid">
+            <div class="about-text">
+                <span class="sub-heading">About Wanderlust</span>
+                <h2>Your Gateway to World Exploration</h2>
+                <p>Wanderlust is designed for dreamers, adventurers, and culture enthusiasts. We simplify travel discovery bycurating handpicked destinations, offering tailored categories, and helping you build life-changing itineraries.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Destinations</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>50k+</h3>
+                        <p>Happy Travelers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Traveler exploring world map">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Travel Categories Section -->
+    <section id="categories" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Browse by Category</h2>
+                <p>Find your ideal getaway based on your travel style</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" data-category="Beaches">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <h3>Beaches</h3>
+                </div>
+                <div class="category-card" data-category="Mountains">
+                    <i class="fa-solid fa-mountain"></i>
+                    <h3>Mountains</h3>
+                </div>
+                <div class="category-card" data-category="Historical">
+                    <i class="fa-solid fa-landmark"></i>
+                    <h3>Historical Places</h3>
+                </div>
+                <div class="category-card" data-category="Adventure">
+                    <i class="fa-solid fa-person-hiking"></i>
+                    <h3>Adventure</h3>
+                </div>
+                <div class="category-card" data-category="Cultural">
+                    <i class="fa-solid fa-masks-theater"></i>
+                    <h3>Cultural</h3>
+                </div>
+                <div class="category-card" data-category="Nature">
+                    <i class="fa-solid fa-tree"></i>
+                    <h3>Nature & Wildlife</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Featured Destinations Section -->
+    <section id="featured" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Destinations</h2>
+                <p>Handpicked places every traveler must visit at least once</p>
+            </div>
+
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <span class="badge">Must Visit</span>
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai skyline">
+                    <div class="featured-info">
+                        <h3>Dubai</h3>
+                        <p><i class="fa-solid fa-location-dot"></i> United Arab Emirates</p>
+                    </div>
+                </div>
+                <div class="featured-card">
+                    <span class="badge">Top Rated</span>
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80" alt="Bali temple">
+                    <div class="featured-info">
+                        <h3>Bali</h3>
+                        <p><i class="fa-solid fa-location-dot"></i> Indonesia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Main Destinations Section (Includes Search & Filter JS) -->
+    <section id="destinations" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore All Destinations</h2>
+                <p>Filter by category or search by destination name</p>
+            </div>
+
+            <!-- Search and Filter Controls -->
+            <div class="controls-wrapper">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search destinations or countries...">
+                </div>
+
+                <div class="filter-buttons" id="filterContainer">
+                    <button class="filter-btn active" data-filter="All">All</button>
+                    <button class="filter-btn" data-filter="Beaches">Beaches</button>
+                    <button class="filter-btn" data-filter="Mountains">Mountains</button>
+                    <button class="filter-btn" data-filter="Historical">Historical</button>
+                    <button class="filter-btn" data-filter="Adventure">Adventure</button>
+                    <button class="filter-btn" data-filter="Cultural">Cultural</button>
+                    <button class="filter-btn" data-filter="Nature">Nature</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Destinations Container -->
+            <div class="destinations-grid" id="destinationsGrid">
+                <!-- Javascript will inject dynamic destination cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Destination Details -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div id="modalBody">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Wanderlust Travel Platform. All rights reserved.</p>
+            <p class="branding">Codiora | Our Code Builds Your Vision</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
