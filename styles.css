@@ -1,12 +1,13 @@
-/* --- Global Styles & Variables --- */
+/* --- Global Theme & Base Styles --- */
 :root {
     --primary-color: #0077b6;
     --secondary-color: #00b4d8;
     --dark-color: #1d3557;
+    --accent-color: #ffb703;
     --light-bg: #f8f9fa;
     --white: #ffffff;
     --text-muted: #6c757d;
-    --border-radius: 8px;
+    --border-radius: 12px;
     --transition: all 0.3s ease;
 }
 
@@ -55,7 +56,7 @@ body {
     color: var(--text-muted);
 }
 
-/* --- Navigation --- */
+/* --- Header Navigation --- */
 .navbar {
     position: fixed;
     top: 0;
@@ -84,6 +85,7 @@ body {
 .nav-links {
     display: flex;
     gap: 25px;
+    align-items: center;
 }
 
 .nav-links a {
@@ -106,7 +108,7 @@ body {
     color: var(--dark-color);
 }
 
-/* --- Hero Section & Slider --- */
+/* --- Hero & Image Slider --- */
 .hero {
     position: relative;
     height: 90vh;
@@ -163,7 +165,7 @@ body {
 
 .btn {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 12px 28px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
@@ -206,7 +208,7 @@ body {
     color: var(--dark-color);
 }
 
-/* --- About Section --- */
+/* --- About --- */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -244,10 +246,10 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* --- Categories Section --- */
+/* --- Categories --- */
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: 20px;
 }
 
@@ -256,7 +258,7 @@ body {
     padding: 30px 20px;
     border-radius: var(--border-radius);
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     cursor: pointer;
     transition: var(--transition);
 }
@@ -269,10 +271,10 @@ body {
 
 .category-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* --- Featured Destinations --- */
+/* --- Featured Grid --- */
 .featured-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -319,7 +321,7 @@ body {
     color: var(--white);
 }
 
-/* --- Destinations (Search & Filters) --- */
+/* --- Search & Category Controls --- */
 .controls-wrapper {
     display: flex;
     flex-direction: column;
@@ -336,11 +338,12 @@ body {
 
 .search-box input {
     width: 100%;
-    padding: 12px 20px 12px 45px;
+    padding: 14px 20px 14px 45px;
     border-radius: 30px;
     border: 1px solid #ddd;
     outline: none;
     font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .search-box i {
@@ -374,6 +377,7 @@ body {
     color: var(--white);
 }
 
+/* --- Destination Cards & Ratings --- */
 .destinations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -384,21 +388,49 @@ body {
     background: var(--white);
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+    position: relative;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
-.card img {
-    width: 100%;
+.card-img-wrapper {
+    position: relative;
     height: 200px;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+}
+
+.fav-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    transition: var(--transition);
+}
+
+.fav-btn.active, .fav-btn:hover {
+    color: #e63946;
+    background: var(--white);
 }
 
 .card-body {
@@ -408,8 +440,28 @@ body {
     flex-grow: 1;
 }
 
-.card-body h3 {
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 5px;
+}
+
+.rating {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.category-tag {
+    display: inline-block;
+    background: #e0f2fe;
+    color: var(--primary-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
 }
 
 .location {
@@ -424,7 +476,7 @@ body {
     flex-grow: 1;
 }
 
-/* --- Modal Popup --- */
+/* --- Detailed Modal Popups --- */
 .modal {
     display: none;
     position: fixed;
@@ -432,18 +484,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.65);
     z-index: 2000;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .modal-content {
     background: var(--white);
     padding: 30px;
     border-radius: var(--border-radius);
-    max-width: 500px;
-    width: 90%;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -451,8 +506,34 @@ body {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 1.8rem;
+    font-size: 2rem;
     cursor: pointer;
+    color: var(--text-muted);
+}
+
+.modal-highlights {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.highlight-pill {
+    background: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: var(--light-bg);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin: 15px 0;
 }
 
 /* --- Footer --- */
@@ -469,7 +550,7 @@ body {
     margin-top: 5px;
 }
 
-/* --- Responsive Media Queries --- */
+/* --- Responsiveness --- */
 @media (max-width: 768px) {
     .hamburger {
         display: block;
