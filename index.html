@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust | Week 2 Interactive Discovery Platform</title>
+    <title>Wanderlust | Week 3 Personalized Travel Experience</title>
     <!-- Google Fonts & Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <!-- Header Navigation -->
     <header class="navbar">
@@ -18,11 +21,10 @@
             
             <nav class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
-                <a href="#about">About</a>
-                <a href="#categories">Categories</a>
-                <a href="#featured">Featured</a>
-                <a href="#destinations">Explore</a>
-                <a href="#favorites"><i class="fa-solid fa-heart"></i> Saved (<span id="favCount">0</span>)</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#profile">Profile</a>
+                <a href="#destinations">Explore All</a>
+                <a href="#saved-section"><i class="fa-solid fa-heart"></i> Favorites (<span id="navFavCount">0</span>)</a>
             </nav>
 
             <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
@@ -31,129 +33,138 @@
         </div>
     </header>
 
-    <!-- Hero Section with Background Slider -->
+    <!-- Hero Section -->
     <section id="hero" class="hero">
         <div class="hero-slider">
             <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
             <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80');"></div>
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1600&q=80');"></div>
         </div>
 
         <div class="hero-content">
-            <h1>Explore Interactive Travel Experiences</h1>
-            <p>Filter by categories, search globally, and inspect rich destination highlights in real time.</p>
-            <a href="#destinations" class="btn btn-primary">Start Exploring</a>
-        </div>
-
-        <div class="slider-controls">
-            <button id="prevSlide"><i class="fa-solid fa-chevron-left"></i></button>
-            <button id="nextSlide"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <div class="container about-grid">
-            <div class="about-text">
-                <span class="sub-heading">About Our Platform</span>
-                <h2>Interactive Travel Discovery Built for Explorers</h2>
-                <p>Wanderlust brings world destinations to life with instant searching, category filtering, detailed travel itineraries, and user rating metrics.</p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h3>4.9 <i class="fa-solid fa-star"></i></h3>
-                        <p>Average Rating</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>100%</h3>
-                        <p>Verified Content</p>
-                    </div>
-                </div>
-            </div>
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Travel Planning">
+            <h1>Welcome To Your Personalized Travel Portal</h1>
+            <p>Manage your profile, track recently viewed places, and curate your dream itinerary.</p>
+            <div class="hero-btns">
+                <a href="#dashboard" class="btn btn-primary">My Dashboard</a>
+                <a href="#destinations" class="btn btn-outline">Explore Directory</a>
             </div>
         </div>
     </section>
 
-    <!-- Categories Section -->
-    <section id="categories" class="section bg-light">
+    <!-- 3. Personalized Dashboard Section -->
+    <section id="dashboard" class="section bg-light">
         <div class="container">
             <div class="section-title">
-                <h2>Browse by Category</h2>
-                <p>Select a category to instantly filter destinations below</p>
+                <h2>User Dashboard</h2>
+                <p>Welcome back! Here is your personal travel summary</p>
             </div>
-            
-            <div class="categories-grid">
-                <div class="category-card" data-category="Beaches">
-                    <i class="fa-solid fa-umbrella-beach"></i>
-                    <h3>Beaches</h3>
+
+            <!-- Quick Navigation Cards -->
+            <div class="quick-nav-grid">
+                <a href="#profile" class="quick-card">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <h4>My Profile</h4>
+                    <p>Manage account details</p>
+                </a>
+                <a href="#saved-section" class="quick-card">
+                    <i class="fa-solid fa-heart"></i>
+                    <h4>Saved Places</h4>
+                    <p><span id="quickFavCount">0</span> Saved destinations</p>
+                </a>
+                <a href="#recently-viewed" class="quick-card">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h4>Recent Activity</h4>
+                    <p>View history</p>
+                </a>
+                <a href="#destinations" class="quick-card">
+                    <i class="fa-solid fa-magnifying-glass-location"></i>
+                    <h4>Discover</h4>
+                    <p>Browse global directory</p>
+                </a>
+            </div>
+
+            <!-- Dashboard Widget: Recently Viewed Destinations -->
+            <div id="recently-viewed" class="dashboard-widget">
+                <div class="widget-header">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Recently Viewed</h3>
                 </div>
-                <div class="category-card" data-category="Mountains">
-                    <i class="fa-solid fa-mountain"></i>
-                    <h3>Mountains</h3>
+                <div class="destinations-grid" id="recentlyViewedGrid">
+                    <!-- Javascript populates recently viewed cards -->
                 </div>
-                <div class="category-card" data-category="Historical">
-                    <i class="fa-solid fa-landmark"></i>
-                    <h3>Historical</h3>
+            </div>
+
+            <!-- Dashboard Widget: Popular Recommendations -->
+            <div class="dashboard-widget">
+                <div class="widget-header">
+                    <h3><i class="fa-solid fa-fire"></i> Recommended For You</h3>
                 </div>
-                <div class="category-card" data-category="Adventure">
-                    <i class="fa-solid fa-person-hiking"></i>
-                    <h3>Adventure</h3>
-                </div>
-                <div class="category-card" data-category="Cultural">
-                    <i class="fa-solid fa-masks-theater"></i>
-                    <h3>Cultural</h3>
-                </div>
-                <div class="category-card" data-category="Nature">
-                    <i class="fa-solid fa-tree"></i>
-                    <h3>Nature & Wildlife</h3>
+                <div class="destinations-grid" id="recommendationsGrid">
+                    <!-- Javascript populates recommendations -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Section -->
-    <section id="featured" class="section">
+    <!-- 1. User Profile Section -->
+    <section id="profile" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Featured Places</h2>
-                <p>Top-rated selections curated for this week</p>
+                <h2>User Profile</h2>
+                <p>Manage your personal details and travel statistics</p>
             </div>
 
-            <div class="featured-grid">
-                <div class="featured-card">
-                    <span class="badge">Must Visit</span>
-                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Dubai">
-                    <div class="featured-info">
-                        <h3>Dubai</h3>
-                        <p><i class="fa-solid fa-location-dot"></i> United Arab Emirates</p>
+            <div class="profile-card">
+                <div class="profile-header">
+                    <img id="profileImageDisplay" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Profile Picture" class="profile-avatar">
+                    <div class="profile-details">
+                        <h2 id="profileNameDisplay">Asia Bibi</h2>
+                        <span class="profile-tag">Explorer & Tech Enthusiast</span>
+                        <p id="profileBioDisplay" class="profile-bio">Software engineering student with a passion for discovering world cultures and coastal landmarks.</p>
+                        <button class="btn btn-primary btn-sm" id="editProfileBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</button>
                     </div>
                 </div>
-                <div class="featured-card">
-                    <span class="badge">Top Rated</span>
-                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80" alt="Bali">
-                    <div class="featured-info">
-                        <h3>Bali</h3>
-                        <p><i class="fa-solid fa-location-dot"></i> Indonesia</p>
+
+                <div class="profile-stats">
+                    <div class="stat-box">
+                        <i class="fa-solid fa-heart"></i>
+                        <h3 id="profileFavCount">0</h3>
+                        <p>Saved Destinations</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fa-solid fa-plane-departure"></i>
+                        <h3 id="profileTripsCount">3</h3>
+                        <p>Planned Trips</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Destination Exploration & Interactive Filters -->
-    <section id="destinations" class="section bg-light">
+    <!-- 2. Favorite Destinations Section -->
+    <section id="saved-section" class="section bg-light">
         <div class="container">
             <div class="section-title">
-                <h2>Interactive Destination Directory</h2>
-                <p>Search by keyword or filter by category to find your next journey</p>
+                <h2>Saved Favorite Destinations</h2>
+                <p>Your handpicked collection of dream travel spots</p>
             </div>
 
-            <!-- Controls: Search & Category Buttons -->
+            <div class="destinations-grid" id="favoritesGrid">
+                <!-- Javascript renders saved items here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Destination Directory -->
+    <section id="destinations" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>All Travel Destinations</h2>
+                <p>Filter or search to find new places and add them to your favorites</p>
+            </div>
+
             <div class="controls-wrapper">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search by name, country, or keyword...">
+                    <input type="text" id="searchInput" placeholder="Search by destination name or country...">
                 </div>
 
                 <div class="filter-buttons" id="filterContainer">
@@ -167,20 +178,40 @@
                 </div>
             </div>
 
-            <!-- Dynamic Card Output Grid -->
             <div class="destinations-grid" id="destinationsGrid">
-                <!-- Javascript injects cards here -->
+                <!-- Javascript renders all cards -->
             </div>
         </div>
     </section>
 
-    <!-- Destination Details Modal -->
+    <!-- Modal 1: Destination Details -->
     <div class="modal" id="detailsModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
-            <div id="modalBody">
-                <!-- Javascript injects rich modal details here -->
-            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Edit Profile -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeProfileModal">&times;</span>
+            <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-user-pen"></i> Edit Profile Information</h3>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="inputName">Full Name</label>
+                    <input type="text" id="inputName" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputBio">Bio</label>
+                    <textarea id="inputBio" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputTrips">Planned Trips Count</label>
+                    <input type="number" id="inputTrips" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Save Changes</button>
+            </form>
         </div>
     </div>
 
