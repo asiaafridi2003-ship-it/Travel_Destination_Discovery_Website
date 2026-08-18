@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust | Week 3 Personalized Travel Experience</title>
+    <title>Wanderlust | Week 4 Smart Trip Planner</title>
     <!-- Google Fonts & Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,9 +21,9 @@
             
             <nav class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
+                <a href="#planner">Trip Planner</a>
                 <a href="#dashboard">Dashboard</a>
                 <a href="#profile">Profile</a>
-                <a href="#destinations">Explore All</a>
                 <a href="#saved-section"><i class="fa-solid fa-heart"></i> Favorites (<span id="navFavCount">0</span>)</a>
             </nav>
 
@@ -36,21 +36,132 @@
     <!-- Hero Section -->
     <section id="hero" class="hero">
         <div class="hero-slider">
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=80');"></div>
         </div>
 
         <div class="hero-content">
-            <h1>Welcome To Your Personalized Travel Portal</h1>
-            <p>Manage your profile, track recently viewed places, and curate your dream itinerary.</p>
+            <h1>Build & Manage Your Smart Itinerary</h1>
+            <p>Plan customized trips day-by-day, add activities, and track your travel schedule seamlessly.</p>
             <div class="hero-btns">
-                <a href="#dashboard" class="btn btn-primary">My Dashboard</a>
-                <a href="#destinations" class="btn btn-outline">Explore Directory</a>
+                <a href="#planner" class="btn btn-primary"><i class="fa-solid fa-route"></i> Open Trip Planner</a>
+                <a href="#destinations" class="btn btn-outline">Browse Directory</a>
             </div>
         </div>
     </section>
 
-    <!-- 3. Personalized Dashboard Section -->
+    <!-- 1. Trip Planner & Itinerary Builder Section -->
+    <section id="planner" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Smart Trip Planner</h2>
+                <p>Design your custom travel itinerary with dynamic schedule management</p>
+            </div>
+
+            <!-- Form: Create / Edit Trip -->
+            <div class="planner-card shadow-sm">
+                <h3><i class="fa-solid fa-pen-to-square"></i> 1. Plan a New Trip</h3>
+                <form id="tripForm" class="trip-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tripName">Trip Title *</label>
+                            <input type="text" id="tripName" placeholder="e.g., Summer Alps Expedition" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripDestination">Destination *</label>
+                            <input type="text" id="tripDestination" placeholder="e.g., Interlaken, Switzerland" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate">Start Date *</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date *</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="travelersCount">Number of Travelers *</label>
+                            <input type="number" id="travelersCount" min="1" value="2" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="tripDescription">Trip Notes / Description</label>
+                            <textarea id="tripDescription" rows="2" placeholder="Write any additional travel notes or objectives..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fa-solid fa-plus"></i> Save & Generate Itinerary
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. Active Trip Overview Banner -->
+            <div id="tripOverviewContainer" class="planner-card overview-card" style="display: none;">
+                <div class="overview-header">
+                    <div>
+                        <span id="overviewStatus" class="badge badge-success">Upcoming</span>
+                        <h2 id="overviewTitle">Trip Title</h2>
+                        <p id="overviewDestination" class="location"><i class="fa-solid fa-location-dot"></i> Destination</p>
+                    </div>
+                    <div class="overview-actions">
+                        <button class="btn btn-outline btn-sm" id="resetTripBtn"><i class="fa-solid fa-trash"></i> Reset Trip</button>
+                    </div>
+                </div>
+                <div class="overview-stats">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <div>
+                            <small>Dates</small>
+                            <strong id="overviewDates">-</strong>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <small>Total Days</small>
+                            <strong id="overviewDays">0 Days</strong>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-users"></i>
+                        <div>
+                            <small>Travelers</small>
+                            <strong id="overviewTravelers">1 Person</strong>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-list-check"></i>
+                        <div>
+                            <small>Total Activities</small>
+                            <strong id="overviewActivitiesCount">0 Items</strong>
+                        </div>
+                    </div>
+                </div>
+                <p id="overviewNotes" class="overview-notes"></p>
+            </div>
+
+            <!-- 3. Day-by-Day Itinerary System -->
+            <div id="itinerarySection" class="planner-card" style="display: none;">
+                <div class="itinerary-header">
+                    <h3><i class="fa-solid fa-calendar-week"></i> 2. Day-by-Day Itinerary Schedule</h3>
+                    <button class="btn btn-outline btn-sm" id="addDayBtn"><i class="fa-solid fa-plus"></i> Add Another Day</button>
+                </div>
+
+                <div id="daysContainer" class="days-container">
+                    <!-- Dynamic Days and Activities Render Here -->
+                </div>
+            </div>
+
+            <!-- 5. Final Trip Summary Output -->
+            <div id="summarySection" class="planner-card bg-light" style="display: none;">
+                <h3><i class="fa-solid fa-file-invoice"></i> 3. Complete Itinerary Summary</h3>
+                <div id="summaryContent" class="summary-content">
+                    <!-- Summary content populated by JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Personalized Dashboard Section -->
     <section id="dashboard" class="section bg-light">
         <div class="container">
             <div class="section-title">
@@ -60,6 +171,11 @@
 
             <!-- Quick Navigation Cards -->
             <div class="quick-nav-grid">
+                <a href="#planner" class="quick-card">
+                    <i class="fa-solid fa-route"></i>
+                    <h4>Trip Planner</h4>
+                    <p>Manage itineraries</p>
+                </a>
                 <a href="#profile" class="quick-card">
                     <i class="fa-solid fa-user-gear"></i>
                     <h4>My Profile</h4>
@@ -70,11 +186,6 @@
                     <h4>Saved Places</h4>
                     <p><span id="quickFavCount">0</span> Saved destinations</p>
                 </a>
-                <a href="#recently-viewed" class="quick-card">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    <h4>Recent Activity</h4>
-                    <p>View history</p>
-                </a>
                 <a href="#destinations" class="quick-card">
                     <i class="fa-solid fa-magnifying-glass-location"></i>
                     <h4>Discover</h4>
@@ -82,29 +193,16 @@
                 </a>
             </div>
 
-            <!-- Dashboard Widget: Recently Viewed Destinations -->
             <div id="recently-viewed" class="dashboard-widget">
                 <div class="widget-header">
                     <h3><i class="fa-solid fa-clock-rotate-left"></i> Recently Viewed</h3>
                 </div>
-                <div class="destinations-grid" id="recentlyViewedGrid">
-                    <!-- Javascript populates recently viewed cards -->
-                </div>
-            </div>
-
-            <!-- Dashboard Widget: Popular Recommendations -->
-            <div class="dashboard-widget">
-                <div class="widget-header">
-                    <h3><i class="fa-solid fa-fire"></i> Recommended For You</h3>
-                </div>
-                <div class="destinations-grid" id="recommendationsGrid">
-                    <!-- Javascript populates recommendations -->
-                </div>
+                <div class="destinations-grid" id="recentlyViewedGrid"></div>
             </div>
         </div>
     </section>
 
-    <!-- 1. User Profile Section -->
+    <!-- User Profile Section -->
     <section id="profile" class="section">
         <div class="container">
             <div class="section-title">
@@ -131,7 +229,7 @@
                     </div>
                     <div class="stat-box">
                         <i class="fa-solid fa-plane-departure"></i>
-                        <h3 id="profileTripsCount">3</h3>
+                        <h3 id="profileTripsCount">1</h3>
                         <p>Planned Trips</p>
                     </div>
                 </div>
@@ -139,17 +237,14 @@
         </div>
     </section>
 
-    <!-- 2. Favorite Destinations Section -->
+    <!-- Favorite Destinations Section -->
     <section id="saved-section" class="section bg-light">
         <div class="container">
             <div class="section-title">
                 <h2>Saved Favorite Destinations</h2>
                 <p>Your handpicked collection of dream travel spots</p>
             </div>
-
-            <div class="destinations-grid" id="favoritesGrid">
-                <!-- Javascript renders saved items here -->
-            </div>
+            <div class="destinations-grid" id="favoritesGrid"></div>
         </div>
     </section>
 
@@ -178,13 +273,54 @@
                 </div>
             </div>
 
-            <div class="destinations-grid" id="destinationsGrid">
-                <!-- Javascript renders all cards -->
-            </div>
+            <div class="destinations-grid" id="destinationsGrid"></div>
         </div>
     </section>
 
-    <!-- Modal 1: Destination Details -->
+    <!-- Modal 1: Add/Edit Activity Modal -->
+    <div class="modal" id="activityModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeActivityModal">&times;</span>
+            <h3 id="activityModalTitle" style="margin-bottom: 20px;"><i class="fa-solid fa-calendar-plus"></i> Schedule Activity</h3>
+            <form id="activityForm">
+                <input type="hidden" id="actTargetDayIndex">
+                <input type="hidden" id="actEditIndex">
+                
+                <div class="form-group">
+                    <label for="actName">Activity Title *</label>
+                    <input type="text" id="actName" placeholder="e.g., Museum Guided Tour" required>
+                </div>
+                <div class="form-group">
+                    <label for="actLocation">Location / Venue *</label>
+                    <input type="text" id="actLocation" placeholder="e.g., Louvre Museum, Paris" required>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="actTime">Scheduled Time *</label>
+                        <input type="time" id="actTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="actCategory">Category *</label>
+                        <select id="actCategory" required>
+                            <option value="Sightseeing">Sightseeing</option>
+                            <option value="Food">Food</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Culture">Culture</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="actDescription">Short Description</label>
+                    <textarea id="actDescription" rows="2" placeholder="Add specific timing, tickets, or notes..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Save Activity</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 2: Destination Details -->
     <div class="modal" id="detailsModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
@@ -192,7 +328,7 @@
         </div>
     </div>
 
-    <!-- Modal 2: Edit Profile -->
+    <!-- Modal 3: Edit Profile -->
     <div class="modal" id="profileModal">
         <div class="modal-content">
             <span class="close-btn" id="closeProfileModal">&times;</span>
