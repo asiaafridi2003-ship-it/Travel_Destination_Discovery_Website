@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust | Week 5 Travel Services & Booking Platform</title>
+    <title>Wanderlust | Week 6 Travel Community & Reviews</title>
     <!-- Google Fonts & Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,10 +21,10 @@
             
             <nav class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
+                <a href="#community">Community & Reviews</a>
                 <a href="#services">Services & Booking</a>
                 <a href="#planner">Trip Planner</a>
                 <a href="#dashboard">Dashboard</a>
-                <a href="#saved-section"><i class="fa-solid fa-heart"></i> Favorites (<span id="navFavCount">0</span>)</a>
             </nav>
 
             <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
@@ -36,28 +36,119 @@
     <!-- Hero Section -->
     <section id="hero" class="hero">
         <div class="hero-slider">
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
         </div>
 
         <div class="hero-content">
-            <h1>Book Essential Travel Services</h1>
-            <p>Discover handpicked hotels, private transports, guided tours, and top dining experiences for your trip.</p>
+            <h1>Travel Community & Reviews</h1>
+            <p>Read authentic experiences, rate destinations, and share your travel insights with fellow travelers worldwide.</p>
             <div class="hero-btns">
-                <a href="#services" class="btn btn-primary"><i class="fa-solid fa-concierge-bell"></i> Browse Services</a>
-                <a href="#planner" class="btn btn-outline">My Itinerary</a>
+                <a href="#community" class="btn btn-primary"><i class="fa-solid fa-comments"></i> Explore Reviews</a>
+                <a href="#write-review" class="btn btn-outline">Write a Review</a>
             </div>
         </div>
     </section>
 
-    <!-- 1. Travel Services & Booking Section -->
+    <!-- 1. Community Reviews & Ratings Section -->
+    <section id="community" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Traveler Ratings & Reviews</h2>
+                <p>See real feedback from our travel community before planning your next adventure</p>
+            </div>
+
+            <!-- Average Rating Breakdown Dashboard -->
+            <div class="rating-dashboard">
+                <div class="rating-score-box">
+                    <h1 id="avgScoreDisplay">0.0</h1>
+                    <div class="stars-outer" id="avgStarsDisplay"></div>
+                    <p><span id="totalReviewsDisplay">0</span> Community Reviews</p>
+                </div>
+
+                <div class="rating-bars-box" id="ratingBarsContainer">
+                    <!-- Progress bars populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="review-controls">
+                <span>Filter Reviews:</span>
+                <div class="filter-buttons" id="reviewFilterContainer">
+                    <button class="rev-filter-btn active" data-rating="All">All Reviews</button>
+                    <button class="rev-filter-btn" data-rating="5">5 Stars</button>
+                    <button class="rev-filter-btn" data-rating="4">4 Stars</button>
+                    <button class="rev-filter-btn" data-rating="3">3 Stars</button>
+                    <button class="rev-filter-btn" data-rating="2">2 Stars</button>
+                    <button class="rev-filter-btn" data-rating="1">1 Star</button>
+                </div>
+            </div>
+
+            <!-- Reviews Feed Grid -->
+            <div class="reviews-grid" id="reviewsGrid"></div>
+        </div>
+    </section>
+
+    <!-- 2. Write a Review Form Section -->
+    <section id="write-review" class="section bg-light">
+        <div class="container">
+            <div class="form-container shadow-sm">
+                <div class="section-title" style="margin-bottom: 25px;">
+                    <h2>Share Your Experience</h2>
+                    <p>Help fellow travelers by reviewing a hotel, tour, activity, or destination</p>
+                </div>
+
+                <form id="addReviewForm" class="review-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="revAuthor">Your Name *</label>
+                            <input type="text" id="revAuthor" placeholder="e.g., Asia Bibi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="revTarget">Destination / Service Name *</label>
+                            <input type="text" id="revTarget" placeholder="e.g., Serena Hotel Hunza or Attabad Lake" required>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Star Rating Picker -->
+                    <div class="form-group">
+                        <label>Your Rating *</label>
+                        <div class="star-rating-picker" id="starPicker">
+                            <i class="fa-solid fa-star star-btn" data-value="1"></i>
+                            <i class="fa-solid fa-star star-btn" data-value="2"></i>
+                            <i class="fa-solid fa-star star-btn" data-value="3"></i>
+                            <i class="fa-solid fa-star star-btn" data-value="4"></i>
+                            <i class="fa-solid fa-star star-btn" data-value="5"></i>
+                            <span class="rating-text" id="ratingText">Select Rating</span>
+                        </div>
+                        <input type="hidden" id="revRatingValue" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="revText">Review Details *</label>
+                        <textarea id="revText" rows="4" placeholder="Describe your experience, customer service, cleanliness, scenery, etc..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="revImage">Photo URL (Optional)</label>
+                        <input type="url" id="revImage" placeholder="https://images.unsplash.com/...">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Community Review
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Travel Services & Reservation Section -->
     <section id="services" class="section">
         <div class="container">
             <div class="section-title">
                 <h2>Travel Services & Reservation</h2>
-                <p>Reserve accommodations, tours, transportation, and activities for your upcoming journey</p>
+                <p>Reserve accommodations, tours, transportation, and activities</p>
             </div>
 
-            <!-- Controls: Category Filter & Search -->
             <div class="controls-wrapper">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -70,26 +161,23 @@
                     <button class="svc-filter-btn" data-svc-filter="Transportation">Transportation</button>
                     <button class="svc-filter-btn" data-svc-filter="Tour Packages">Tour Packages</button>
                     <button class="svc-filter-btn" data-svc-filter="Activities">Activities</button>
-                    <button class="svc-filter-btn" data-svc-filter="Restaurants">Restaurants</button>
                 </div>
             </div>
 
-            <!-- Service Cards Grid -->
             <div class="services-grid" id="servicesGrid"></div>
         </div>
     </section>
 
-    <!-- 2. Trip Planner (Week 4 Module Integrated) -->
+    <!-- 4. Smart Trip Planner Section -->
     <section id="planner" class="section bg-light">
         <div class="container">
             <div class="section-title">
                 <h2>Smart Trip Planner</h2>
-                <p>Design your custom travel itinerary with dynamic schedule management</p>
+                <p>Design your custom travel itinerary</p>
             </div>
 
-            <!-- Form: Create / Edit Trip -->
             <div class="planner-card shadow-sm">
-                <h3><i class="fa-solid fa-pen-to-square"></i> 1. Plan a New Trip</h3>
+                <h3><i class="fa-solid fa-pen-to-square"></i> Plan a New Trip</h3>
                 <form id="tripForm" class="trip-form">
                     <div class="form-grid">
                         <div class="form-group">
@@ -108,196 +196,73 @@
                             <label for="endDate">End Date *</label>
                             <input type="date" id="endDate" required>
                         </div>
-                        <div class="form-group">
-                            <label for="travelersCount">Number of Travelers *</label>
-                            <input type="number" id="travelersCount" min="1" value="2" required>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="tripDescription">Trip Notes / Description</label>
-                            <textarea id="tripDescription" rows="2" placeholder="Write any additional travel notes or objectives..."></textarea>
-                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin-top: 15px;">
-                        <i class="fa-solid fa-plus"></i> Save & Generate Itinerary
+                        <i class="fa-solid fa-plus"></i> Save Itinerary
                     </button>
                 </form>
             </div>
 
-            <!-- Active Trip Overview Banner -->
             <div id="tripOverviewContainer" class="planner-card overview-card" style="display: none;">
                 <div class="overview-header">
                     <div>
-                        <span id="overviewStatus" class="badge badge-success">Upcoming</span>
+                        <span class="badge badge-success">Upcoming</span>
                         <h2 id="overviewTitle">Trip Title</h2>
                         <p id="overviewDestination" class="location"><i class="fa-solid fa-location-dot"></i> Destination</p>
                     </div>
-                    <div class="overview-actions">
-                        <button class="btn btn-outline btn-sm" id="resetTripBtn"><i class="fa-solid fa-trash"></i> Reset Trip</button>
-                    </div>
+                    <button class="btn btn-outline btn-sm" id="resetTripBtn"><i class="fa-solid fa-trash"></i> Reset Trip</button>
                 </div>
-                <div class="overview-stats">
-                    <div class="stat-item">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <div><small>Dates</small><strong id="overviewDates">-</strong></div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fa-solid fa-clock"></i>
-                        <div><small>Total Days</small><strong id="overviewDays">0 Days</strong></div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fa-solid fa-users"></i>
-                        <div><small>Travelers</small><strong id="overviewTravelers">1 Person</strong></div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fa-solid fa-list-check"></i>
-                        <div><small>Total Activities</small><strong id="overviewActivitiesCount">0 Items</strong></div>
-                    </div>
-                </div>
-                <p id="overviewNotes" class="overview-notes"></p>
-            </div>
-
-            <!-- Day-by-Day Itinerary System -->
-            <div id="itinerarySection" class="planner-card" style="display: none;">
-                <div class="itinerary-header">
-                    <h3><i class="fa-solid fa-calendar-week"></i> 2. Day-by-Day Itinerary Schedule</h3>
-                    <button class="btn btn-outline btn-sm" id="addDayBtn"><i class="fa-solid fa-plus"></i> Add Another Day</button>
-                </div>
-                <div id="daysContainer" class="days-container"></div>
             </div>
         </div>
     </section>
 
-    <!-- User Dashboard Section -->
+    <!-- 5. User Dashboard -->
     <section id="dashboard" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>User Dashboard & Recent Bookings</h2>
-                <p>Track your confirmed reservations and saved travel destinations</p>
+                <h2>User Dashboard</h2>
+                <p>Track your confirmed reservations and submitted feedback</p>
             </div>
 
-            <div class="quick-nav-grid">
-                <a href="#services" class="quick-card">
-                    <i class="fa-solid fa-concierge-bell"></i>
-                    <h4>Book Services</h4>
-                    <p>Hotels & Tours</p>
-                </a>
-                <a href="#planner" class="quick-card">
-                    <i class="fa-solid fa-route"></i>
-                    <h4>Trip Planner</h4>
-                    <p>Manage itineraries</p>
-                </a>
-                <a href="#saved-section" class="quick-card">
-                    <i class="fa-solid fa-heart"></i>
-                    <h4>Saved Places</h4>
-                    <p><span id="quickFavCount">0</span> Saved spots</p>
-                </a>
-            </div>
-
-            <div class="dashboard-widget" style="margin-top: 30px;">
-                <div class="widget-header">
-                    <h3><i class="fa-solid fa-ticket"></i> Active Reservations History</h3>
-                </div>
-                <div id="bookingHistoryContainer" class="booking-history-list">
+            <div class="dashboard-widget">
+                <h3><i class="fa-solid fa-ticket"></i> Active Reservations</h3>
+                <div id="bookingHistoryContainer" class="booking-history-list" style="margin-top: 15px;">
                     <p style="color:var(--text-muted); font-size:0.9rem;">No active service bookings found.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Saved Favorites Section -->
-    <section id="saved-section" class="section bg-light">
-        <div class="container">
-            <div class="section-title">
-                <h2>Saved Favorite Destinations</h2>
-                <p>Your curated collection of travel spots</p>
-            </div>
-            <div class="destinations-grid" id="favoritesGrid"></div>
-        </div>
-    </section>
-
-    <!-- Modal 1: Service Detailed Information Modal -->
-    <div class="modal" id="serviceDetailModal">
-        <div class="modal-content modal-lg">
-            <span class="close-btn" id="closeSvcDetailModal">&times;</span>
-            <div id="svcDetailBody"></div>
-        </div>
-    </div>
-
-    <!-- Modal 2: Service Booking Form Modal -->
+    <!-- Modals (Booking Form & Confirmation) -->
     <div class="modal" id="bookingFormModal">
         <div class="modal-content">
             <span class="close-btn" id="closeBookingFormModal">&times;</span>
-            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-calendar-check"></i> Complete Your Reservation</h3>
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-calendar-check"></i> Complete Reservation</h3>
             <form id="serviceBookingForm">
                 <input type="hidden" id="bookSvcId">
                 <input type="hidden" id="bookSvcUnitPrice">
-
-                <div class="booking-summary-banner" id="formSvcBanner">
-                    <!-- Dynamic service title banner -->
-                </div>
-
+                <div class="booking-summary-banner" id="formSvcBanner"></div>
+                
                 <div class="form-group">
                     <label for="bookFullName">Full Name *</label>
-                    <input type="text" id="bookFullName" placeholder="e.g., Asia Bibi" required>
+                    <input type="text" id="bookFullName" required>
                 </div>
-                
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="bookEmail">Email Address *</label>
-                        <input type="email" id="bookEmail" placeholder="name@example.com" required>
+                        <label for="bookEmail">Email *</label>
+                        <input type="email" id="bookEmail" required>
                     </div>
                     <div class="form-group">
-                        <label for="bookPhone">Phone Number *</label>
-                        <input type="tel" id="bookPhone" placeholder="+92 300 1234567" required>
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="bookDate">Booking Date *</label>
+                        <label for="bookDate">Date *</label>
                         <input type="date" id="bookDate" required>
                     </div>
-                    <div class="form-group">
-                        <label for="bookPeople">Number of People *</label>
-                        <input type="number" id="bookPeople" min="1" value="1" required>
-                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="bookSpecialReq">Special Requests / Notes</label>
-                    <textarea id="bookSpecialReq" rows="2" placeholder="e.g., Late check-in, dietary preferences, extra bed..."></textarea>
-                </div>
-
-                <!-- Real-time Dynamic Price Calculation Banner -->
                 <div class="price-calculation-box">
-                    <span>Estimated Total Amount:</span>
+                    <span>Total Amount:</span>
                     <strong id="bookCalculatedPrice">$0</strong>
                 </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">
-                    Review & Confirm Booking
-                </button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">Confirm Booking</button>
             </form>
-        </div>
-    </div>
-
-    <!-- Modal 3: Booking Confirmation & Receipt Modal -->
-    <div class="modal" id="bookingReceiptModal">
-        <div class="modal-content text-center">
-            <span class="close-btn" id="closeReceiptModal">&times;</span>
-            <div class="confirmation-icon">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h2>Booking Request Submitted!</h2>
-            <p style="color:var(--text-muted); margin-bottom: 15px;">Your reservation details have been processed successfully.</p>
-
-            <div class="receipt-card" id="receiptContent">
-                <!-- Receipt details populated via JavaScript -->
-            </div>
-
-            <button class="btn btn-primary" id="finishBookingBtn" style="margin-top: 20px; width: 100%;">
-                Done & View History
-            </button>
         </div>
     </div>
 
