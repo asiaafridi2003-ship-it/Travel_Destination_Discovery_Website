@@ -1,54 +1,60 @@
-// --- 1. SEED COMMUNITY REVIEWS REPOSITORY ---
-const initialReviews = [
+// --- 1. DESTINATIONS REPOSITORY WITH MATCHING METADATA ---
+const destinationKnowledgeBase = [
     {
-        id: 1,
-        author: "Amina Khan",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
-        target: "Serena Hotel Hunza",
-        rating: 5,
-        date: "2026-08-15",
-        text: "The view of Ultar Sar peak from our room balcony was unforgettable! Exceptional hospitality and authentic local breakfast options.",
-        photo: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
-        helpfulCount: 24
+        id: 201,
+        name: "Hunza Valley",
+        location: "Gilgit-Baltistan",
+        rating: 4.9,
+        estimatedCost: "$120 / day",
+        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+        budgetTier: "Medium",
+        type: ["Adventure", "Relaxation", "Cultural"],
+        environment: "Mountains",
+        duration: "Medium",
+        highlights: "Altit & Baltit Forts, Passu Cones, Attabad Lake."
     },
     {
-        id: 2,
-        author: "Hamza Tariq",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
-        target: "Private SUV Overland Express",
-        rating: 4,
-        date: "2026-08-20",
-        text: "Punctual driver with deep knowledge of Karakoram Highway routes. Vehicle was clean and handled rough mountain roads safely.",
-        photo: null,
-        helpfulCount: 11
+        id: 202,
+        name: "Skardu & Deosai Plains",
+        location: "Gilgit-Baltistan",
+        rating: 5.0,
+        estimatedCost: "$140 / day",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        budgetTier: "Medium",
+        type: ["Adventure", "Family"],
+        environment: "Mountains",
+        duration: "Long",
+        highlights: "Shangrila Lake, Katpana Cold Desert, Deosai National Park."
     },
     {
-        id: 3,
-        author: "Sara Malik",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
-        target: "Attabad Lake Jet-Boat Tour",
-        rating: 5,
-        date: "2026-08-28",
-        text: "Thrilling boat ride across the turquoise waters! Life jackets were properly fitted, and the pilot gave us plenty of time for photos.",
-        photo: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80",
-        helpfulCount: 18
+        id: 203,
+        name: "Swat Valley & Kalam",
+        location: "Khyber Pakhtunkhwa",
+        rating: 4.7,
+        estimatedCost: "$70 / day",
+        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
+        budgetTier: "Budget",
+        type: ["Family", "Relaxation"],
+        environment: "Mountains",
+        duration: "Weekend",
+        highlights: "Mahodand Lake, Malam Jabba Ski Resort, Ushu Forest."
+    },
+    {
+        id: 204,
+        name: "Historical Lahore Heritage Circuit",
+        location: "Punjab",
+        rating: 4.8,
+        estimatedCost: "$50 / day",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+        budgetTier: "Budget",
+        type: ["Cultural", "Family"],
+        environment: "Historical",
+        duration: "Weekend",
+        highlights: "Badshahi Mosque, Lahore Fort, Food Street."
     }
 ];
 
-// LocalStorage State Management
-let reviews = JSON.parse(localStorage.getItem('wanderlust_reviews')) || initialReviews;
-let helpfulVotes = JSON.parse(localStorage.getItem('wanderlust_votes')) || {};
-
-// Rating Text Mapping
-const ratingLabels = {
-    1: "1 - Poor",
-    2: "2 - Needs Improvement",
-    3: "3 - Average",
-    4: "4 - Good",
-    5: "5 - Excellent"
-};
-
-// --- Toast Helper ---
+// Toast Notification Helper
 function showToast(msg) {
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
@@ -58,207 +64,140 @@ function showToast(msg) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// Helper: Render Star Icons
-function getStarIcons(rating) {
-    let starsHtml = '';
-    for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-            starsHtml += `<i class="fa-solid fa-star"></i>`;
-        } else {
-            starsHtml += `<i class="fa-regular fa-star"></i>`;
+// --- 2. RULE-BASED RECOMMENDATION ENGINE ---
+const recommendationForm = document.getElementById('recommendationForm');
+const recommendationsGrid = document.getElementById('recommendationsGrid');
+
+function computeRecommendations() {
+    const budget = document.getElementById('prefBudget').value;
+    const type = document.getElementById('prefType').value;
+    const duration = document.getElementById('prefDuration').value;
+    const environment = document.getElementById('prefEnvironment').value;
+
+    // Score destinations using preference matching logic
+    const scoredDestinations = destinationKnowledgeBase.map(dest => {
+        let score = 0;
+        let reasons = [];
+
+        if (dest.budgetTier === budget) {
+            score += 30;
+            reasons.push(`Fits your ${budget} budget preference`);
         }
-    }
-    return starsHtml;
-}
+        if (dest.type.includes(type)) {
+            score += 30;
+            reasons.push(`Ideal for ${type} travel style`);
+        }
+        if (dest.environment === environment) {
+            score += 25;
+            reasons.push(`Matches ${environment} environment`);
+        }
+        if (dest.duration === duration) {
+            score += 15;
+            reasons.push(`Suited for a ${duration} timeframe`);
+        }
 
-// --- 2. AGGREGATE RATING CALCULATIONS & PROGRESS BARS ---
-function updateRatingDashboard() {
-    const total = reviews.length;
-    const avgScoreDisplay = document.getElementById('avgScoreDisplay');
-    const avgStarsDisplay = document.getElementById('avgStarsDisplay');
-    const totalReviewsDisplay = document.getElementById('totalReviewsDisplay');
-    const barsContainer = document.getElementById('ratingBarsContainer');
-
-    if (total === 0) {
-        avgScoreDisplay.textContent = "0.0";
-        avgStarsDisplay.innerHTML = getStarIcons(0);
-        totalReviewsDisplay.textContent = "0";
-        barsContainer.innerHTML = "<p>No ratings submitted yet.</p>";
-        return;
-    }
-
-    const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
-    const avg = (sum / total).toFixed(1);
-
-    avgScoreDisplay.textContent = avg;
-    avgStarsDisplay.innerHTML = getStarIcons(Math.round(avg));
-    totalReviewsDisplay.textContent = total;
-
-    // Calculate distribution counts (5 to 1 star)
-    const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    reviews.forEach(r => counts[r.rating] = (counts[r.rating] || 0) + 1);
-
-    barsContainer.innerHTML = [5, 4, 3, 2, 1].map(star => {
-        const count = counts[star] || 0;
-        const pct = Math.round((count / total) * 100);
-        return `
-            <div class="rating-bar-row">
-                <label>${star} Stars</label>
-                <div class="bar-track">
-                    <div class="bar-fill" style="width: ${pct}%;"></div>
-                </div>
-                <span class="bar-count">${count}</span>
-            </div>
-        `;
-    }).join('');
-}
-
-// --- 3. RENDER REVIEWS FEED & HELPFUL UPVOTE SYSTEM ---
-const reviewsGrid = document.getElementById('reviewsGrid');
-
-function renderReviews() {
-    const activeBtn = document.querySelector('.rev-filter-btn.active');
-    const selectedFilter = activeBtn ? activeBtn.getAttribute('data-rating') : 'All';
-
-    const filtered = reviews.filter(r => {
-        if (selectedFilter === 'All') return true;
-        return r.rating === parseInt(selectedFilter);
+        return { ...dest, score, matchReason: reasons.join(" • ") };
     });
 
-    if (filtered.length === 0) {
-        reviewsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">No reviews match the selected filter rating.</p>`;
-        return;
-    }
+    // Sort by match score descending
+    scoredDestinations.sort((a, b) => b.score - a.score);
 
-    reviewsGrid.innerHTML = filtered.map(r => {
-        const hasVoted = helpfulVotes[r.id];
-        return `
-            <div class="review-card">
-                <div class="review-header">
-                    <img src="${r.avatar}" alt="${r.author}" class="avatar-img">
-                    <div class="review-author-info">
-                        <h4>${r.author}</h4>
-                        <small><i class="fa-regular fa-clock"></i> ${r.date}</small><br>
-                        <span class="review-target-tag">${r.target}</span>
-                    </div>
+    // Render Recommendation Cards
+    recommendationsGrid.innerHTML = scoredDestinations.map(dest => `
+        <div class="rec-card">
+            <div class="rec-img-box">
+                <img src="${dest.image}" alt="${dest.name}">
+                <span class="rec-badge">${dest.score}% Match</span>
+            </div>
+            <div class="rec-body">
+                <h4>${dest.name}</h4>
+                <p class="rec-location"><i class="fa-solid fa-location-dot"></i> ${dest.location}</p>
+
+                <div class="rec-reason-box">
+                    <i class="fa-solid fa-sparkles"></i> <strong>Why Recommended:</strong> ${dest.matchReason || "Popular destination."}
                 </div>
-                <div class="review-stars">${getStarIcons(r.rating)}</div>
-                <p class="review-body">${r.text}</p>
-                ${r.photo ? `<img src="${r.photo}" alt="Review photo" class="review-user-photo">` : ''}
-                <div class="review-footer">
-                    <button class="helpful-btn ${hasVoted ? 'active' : ''}" onclick="toggleHelpful(${r.id})">
-                        <i class="fa-solid fa-thumbs-up"></i> Helpful — ${r.helpfulCount}
-                    </button>
+
+                <div class="rec-meta">
+                    <span><i class="fa-solid fa-star" style="color:var(--accent-color);"></i> ${dest.rating}</span>
+                    <strong style="color:var(--primary-color);">${dest.estimatedCost}</strong>
                 </div>
             </div>
-        `;
-    }).join('');
+        </div>
+    `).join('');
 }
 
-// Toggle Helpful Counter
-window.toggleHelpful = function(id) {
-    const rev = reviews.find(r => r.id === id);
-    if (!rev) return;
+recommendationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    computeRecommendations();
+    showToast("Smart recommendations updated based on your preferences!");
+});
 
-    if (helpfulVotes[id]) {
-        rev.helpfulCount -= 1;
-        delete helpfulVotes[id];
-        showToast("Helpful vote removed.");
-    } else {
-        rev.helpfulCount += 1;
-        helpfulVotes[id] = true;
-        showToast("Marked review as helpful!");
-    }
-
-    localStorage.setItem('wanderlust_reviews', JSON.stringify(reviews));
-    localStorage.setItem('wanderlust_votes', JSON.stringify(helpfulVotes));
-    renderReviews();
+// --- 3. TRAVEL ASSISTANT INTERACTIVE RESPONSES ---
+const assistantKnowledge = {
+    budget: `
+        <h5><i class="fa-solid fa-wallet"></i> Top Low-Budget Recommendations</h5>
+        <p>If you are traveling on an economy budget, consider <strong>Swat Valley</strong> or <strong>Historical Lahore</strong>.</p>
+        <ul>
+            <li><strong>Swat Valley:</strong> Affordable public transit, budget guesthouses, and scenic mountain views ($40-$60/day).</li>
+            <li><strong>Lahore:</strong> Low-cost heritage tours, budget street food, and affordable local transport.</li>
+        </ul>
+    `,
+    family: `
+        <h5><i class="fa-solid fa-people-roof"></i> Family-Friendly Travel Destinations</h5>
+        <p>For family vacations with kids or elders, choose locations with good road access and accessible amenities:</p>
+        <ul>
+            <li><strong>Shangrila Skardu:</strong> Peaceful lakeside resorts with paved access.</li>
+            <li><strong>Hunza Valley:</strong> Historic forts, gentle village walks, and safe local hospitality.</li>
+        </ul>
+    `,
+    adventure: `
+        <h5><i class="fa-solid fa-person-hiking"></i> Top Adventure & Trekking Spots</h5>
+        <p>Looking for adrenaline and outdoor expeditions? We recommend:</p>
+        <ul>
+            <li><strong>K2 Base Camp Trek:</strong> World-class high-altitude trekking journey.</li>
+            <li><strong>Attabad Lake Jet-Boating:</strong> High-speed water sports surrounded by Karakoram cliffs.</li>
+            <li><strong>Deosai National Park:</strong> High-altitude plateau camping and wildlife spotting.</li>
+        </ul>
+    `,
+    packing: `
+        <h5><i class="fa-solid fa-suitcase"></i> Essential Mountain Travel Packing Checklist</h5>
+        <p>When traveling to high-altitude regions (Hunza, Skardu, Swat):</p>
+        <ul>
+            <li>Thermal layers, windproof jacket, and sturdy trekking shoes.</li>
+            <li>Sunscreen (SPF 50+), sunglasses, and lip balm for high UV protection.</li>
+            <li>Power banks, cash in local currency (ATMs may have limited connectivity).</li>
+        </ul>
+    `,
+    besttime: `
+        <h5><i class="fa-solid fa-calendar-day"></i> Best Seasons to Visit Northern Areas</h5>
+        <p>Timing your trip depends on the season and weather experience you prefer:</p>
+        <ul>
+            <li><strong>Cherry Blossom Season:</strong> April to May (vibrant pink blooms across Hunza).</li>
+            <li><strong>Summer Trekking:</strong> June to August (clear passes to Deosai and lakes).</li>
+            <li><strong>Autumn Foliage:</strong> October to November (golden orange trees across the valleys).</li>
+        </ul>
+    `
 };
 
-// Filter Button Listeners
-document.querySelectorAll('.rev-filter-btn').forEach(btn => {
+const assistantBtns = document.querySelectorAll('.assistant-btn');
+const assistantResponseBody = document.getElementById('assistantResponseBody');
+
+assistantBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.rev-filter-btn').forEach(b => b.classList.remove('active'));
+        assistantBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderReviews();
+
+        const queryKey = btn.getAttribute('data-query');
+        if (assistantKnowledge[queryKey]) {
+            assistantResponseBody.innerHTML = assistantKnowledge[queryKey];
+        }
     });
 });
 
-// --- 4. INTERACTIVE STAR RATING PICKER & SUBMISSION FORM ---
-const starBtns = document.querySelectorAll('#starPicker .star-btn');
-const ratingValueInput = document.getElementById('revRatingValue');
-const ratingTextLabel = document.getElementById('ratingText');
-
-starBtns.forEach(star => {
-    star.addEventListener('click', () => {
-        const val = parseInt(star.getAttribute('data-value'));
-        ratingValueInput.value = val;
-        ratingTextLabel.textContent = ratingLabels[val];
-
-        starBtns.forEach(s => {
-            const sVal = parseInt(s.getAttribute('data-value'));
-            if (sVal <= val) {
-                s.classList.add('active');
-            } else {
-                s.classList.remove('active');
-            }
-        });
-    });
-});
-
-// Submit New Review
-const addReviewForm = document.getElementById('addReviewForm');
-addReviewForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const author = document.getElementById('revAuthor').value.trim();
-    const target = document.getElementById('revTarget').value.trim();
-    const rating = parseInt(ratingValueInput.value);
-    const text = document.getElementById('revText').value.trim();
-    const photo = document.getElementById('revImage').value.trim();
-
-    // Form Validation Check
-    if (rating === 0) {
-        showToast("Please select a star rating between 1 and 5.");
-        return;
-    }
-    if (!author || !target || !text) {
-        showToast("Please complete all required fields.");
-        return;
-    }
-
-    const newReview = {
-        id: Date.now(),
-        author,
-        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
-        target,
-        rating,
-        date: new Date().toISOString().split('T')[0],
-        text,
-        photo: photo !== "" ? photo : null,
-        helpfulCount: 0
-    };
-
-    reviews.unshift(newReview);
-    localStorage.setItem('wanderlust_reviews', JSON.stringify(reviews));
-
-    // Reset Form State
-    addReviewForm.reset();
-    ratingValueInput.value = "0";
-    ratingTextLabel.textContent = "Select Rating";
-    starBtns.forEach(s => s.classList.remove('active'));
-
-    updateRatingDashboard();
-    renderReviews();
-    showToast("Thank you! Your review has been published.");
-    location.href = '#community';
-});
-
-// Navigation Toggle
+// --- 4. NAVIGATION HANDLERS & INITIALIZATION ---
 document.getElementById('hamburgerBtn').addEventListener('click', () => {
     document.getElementById('navLinks').classList.toggle('active');
 });
 
 // Initial Executions
-updateRatingDashboard();
-renderReviews();
+computeRecommendations();
