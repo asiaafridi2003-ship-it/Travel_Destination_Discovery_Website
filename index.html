@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust | Week 7 Smart Recommendation & Assistant Platform</title>
+    <title>Wanderlust | Production Travel & Tourism Platform</title>
     <!-- Google Fonts & Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,78 +11,118 @@
 </head>
 <body>
 
-    <!-- Toast Notification System -->
-    <div id="toastContainer" class="toast-container"></div>
+    <!-- Notification Toast System -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-    <!-- Header Navigation -->
+    <!-- Header & Navigation -->
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo"><i class="fa-solid fa-compass"></i> Wanderlust</a>
             
             <nav class="nav-links" id="navLinks">
                 <a href="#hero">Home</a>
-                <a href="#smart-recommendations">Smart Recommendations</a>
-                <a href="#assistant">Travel Assistant</a>
-                <a href="#community">Reviews</a>
+                <a href="#explore">Explore</a>
+                <a href="#recommendations">Recommendations</a>
+                <a href="#assistant">Assistant</a>
                 <a href="#services">Services</a>
+                <a href="#reviews">Reviews</a>
                 <a href="#planner">Planner</a>
             </nav>
 
-            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation Menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <div class="nav-actions">
+                <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
-        <div class="hero-slider">
-            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
-        </div>
-
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>Discover Journeys Tailored For You</h1>
-            <p>Set your travel preferences and let our smart engine curate personalized recommendations and itineraries.</p>
+            <h1>Explore Extraordinary Journeys</h1>
+            <p>Your end-to-end intelligent platform for destination discovery, personalized recommendations, travel assistance, and seamless bookings.</p>
             <div class="hero-btns">
-                <a href="#smart-recommendations" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Get Recommendations</a>
-                <a href="#assistant" class="btn btn-outline"><i class="fa-solid fa-robot"></i> Ask Travel Assistant</a>
+                <a href="#explore" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Explore Destinations</a>
+                <a href="#recommendations" class="btn btn-outline"><i class="fa-solid fa-wand-magic-sparkles"></i> Get Smart Recommendations</a>
             </div>
         </div>
     </section>
 
-    <!-- 1. Smart Travel Recommendation Engine Section (Week 7 Focus) -->
-    <section id="smart-recommendations" class="section">
+    <!-- Destinations & Search Exploration Section -->
+    <section id="explore" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Smart Travel Match Engine</h2>
-                <p>Personalized recommendations powered by rule-based preference matching</p>
+                <h2>Explore Popular Destinations</h2>
+                <p>Filter by style, budget, or name to find your next unforgettable experience</p>
             </div>
 
-            <!-- Preferences Form Card -->
+            <!-- Search and Filter Bar -->
+            <div class="filter-card shadow-sm">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="searchInput"><i class="fa-solid fa-magnifying-glass"></i> Search</label>
+                        <input type="text" id="searchInput" placeholder="Search destination or region...">
+                    </div>
+                    <div class="form-group">
+                        <label for="filterStyle"><i class="fa-solid fa-compass"></i> Travel Style</label>
+                        <select id="filterStyle">
+                            <option value="All">All Travel Styles</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Relaxation">Relaxation</option>
+                            <option value="Family">Family Friendly</option>
+                            <option value="Cultural">Cultural</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterBudget"><i class="fa-solid fa-wallet"></i> Budget Tier</label>
+                        <select id="filterBudget">
+                            <option value="All">All Budgets</option>
+                            <option value="Budget">Budget ($)</option>
+                            <option value="Medium">Medium ($$)</option>
+                            <option value="Luxury">Luxury ($$$)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destinations Display Grid -->
+            <div class="destinations-grid" id="destinationsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Smart Recommendation Section -->
+    <section id="recommendations" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Smart Travel Recommendations</h2>
+                <p>Input your travel criteria to receive rule-matched recommendations</p>
+            </div>
+
             <div class="pref-card shadow-sm">
-                <h3><i class="fa-solid fa-sliders"></i> Set Travel Preferences</h3>
                 <form id="recommendationForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="prefBudget">Estimated Budget *</label>
+                            <label for="prefBudget">Target Budget *</label>
                             <select id="prefBudget" required>
                                 <option value="Budget">Economy / Budget ($)</option>
                                 <option value="Medium" selected>Moderate / Medium ($$)</option>
                                 <option value="Luxury">Premium / Luxury ($$$)</option>
                             </select>
                         </div>
-
                         <div class="form-group">
-                            <label for="prefType">Travel Style / Type *</label>
+                            <label for="prefType">Travel Type *</label>
                             <select id="prefType" required>
                                 <option value="Adventure" selected>Adventure & Trekking</option>
                                 <option value="Relaxation">Relaxation & Wellness</option>
                                 <option value="Family">Family Friendly</option>
                                 <option value="Cultural">Cultural & Heritage</option>
-                                <option value="Luxury">Luxury Escape</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="prefDuration">Trip Duration *</label>
                             <select id="prefDuration" required>
@@ -91,121 +131,167 @@
                                 <option value="Long">Extended Exploration (8+ Days)</option>
                             </select>
                         </div>
-
                         <div class="form-group">
-                            <label for="prefEnvironment">Preferred Environment *</label>
+                            <label for="prefEnvironment">Environment *</label>
                             <select id="prefEnvironment" required>
                                 <option value="Mountains" selected>Mountains & Valleys</option>
-                                <option value="Lakes">Lakes & Rivers</option>
                                 <option value="Historical">Historical Cities</option>
-                                <option value="Coastal">Coastal & Water</option>
+                                <option value="Coastal">Coastal & Lakes</option>
                             </select>
                         </div>
-
-                        <div class="form-group">
-                            <label for="prefTravelers">Number of Travelers *</label>
-                            <input type="number" id="prefTravelers" min="1" max="20" value="2" required>
-                        </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 100%;">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Matches
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Calculate Matches
                     </button>
                 </form>
             </div>
 
-            <!-- Recommendation Results Grid -->
-            <div id="recommendationResultsContainer" style="margin-top: 40px;">
-                <h3 style="margin-bottom: 20px; color: var(--dark-color);"><i class="fa-solid fa-thumbs-up"></i> Top Recommendations For You</h3>
-                <div class="recommendations-grid" id="recommendationsGrid">
-                    <!-- Dynamic recommendation cards render here -->
-                </div>
-            </div>
+            <div id="recommendationsGrid" class="recommendations-grid" style="margin-top: 30px;"></div>
         </div>
     </section>
 
-    <!-- 2. Interactive Travel Assistant Section (Week 7 Focus) -->
-    <section id="assistant" class="section bg-light">
+    <!-- Travel Assistant Section -->
+    <section id="assistant" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Wanderlust Travel Assistant</h2>
-                <p>Select common travel questions or query our assistant for fast answers</p>
+                <h2>Travel Assistant</h2>
+                <p>Instant answers and guidance for common travel queries</p>
             </div>
 
             <div class="assistant-wrapper">
-                <!-- Preset Question Buttons -->
                 <div class="assistant-questions shadow-sm">
-                    <h4><i class="fa-solid fa-circle-question"></i> Select a FAQ Prompt</h4>
-                    <button class="assistant-btn" data-query="budget">Where should I travel on a low budget?</button>
-                    <button class="assistant-btn" data-query="family">Which destinations are best for families?</button>
-                    <button class="assistant-btn" data-query="adventure">What are top adventure and trekking spots?</button>
-                    <button class="assistant-btn" data-query="packing">What essential packing items are required for mountain trips?</button>
-                    <button class="assistant-btn" data-query="besttime">When is the best time to visit Hunza and Skardu?</button>
+                    <h4><i class="fa-solid fa-circle-question"></i> Select Query Prompt</h4>
+                    <button class="assistant-btn active" data-query="budget">Low Budget Travel Guide</button>
+                    <button class="assistant-btn" data-query="family">Family Friendly Recommendations</button>
+                    <button class="assistant-btn" data-query="adventure">Adventure & Trekking Options</button>
+                    <button class="assistant-btn" data-query="packing">Mountain Travel Checklist</button>
+                    <button class="assistant-btn" data-query="besttime">Optimal Travel Seasons</button>
                 </div>
 
-                <!-- Response Screen Box -->
-                <div class="assistant-response-box shadow-sm" id="assistantResponseBox">
+                <div class="assistant-response-box shadow-sm">
                     <div class="assistant-header">
                         <i class="fa-solid fa-robot"></i>
                         <div>
                             <h5>Wanderlust Assistant</h5>
-                            <small>Ready to help guide your travel choices</small>
+                            <small>Interactive Guidance Module</small>
                         </div>
                     </div>
-                    <div class="assistant-body" id="assistantResponseBody">
-                        <p style="color: var(--text-muted);">Select a question on the left to display travel advice and recommendations.</p>
-                    </div>
+                    <div class="assistant-body" id="assistantResponseBody"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. Community Reviews Section (Week 6 Integrated) -->
-    <section id="community" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Community Reviews & Ratings</h2>
-                <p>Authentic traveler reviews and feedback</p>
-            </div>
-            <div class="reviews-feed" id="reviewsFeed"></div>
-        </div>
-    </section>
-
-    <!-- 4. Travel Services Section (Week 5 Integrated) -->
+    <!-- Services & Booking Section -->
     <section id="services" class="section bg-light">
         <div class="container">
             <div class="section-title">
                 <h2>Travel Services & Booking</h2>
-                <p>Reserve accommodations, tours, and private transportation</p>
+                <p>Reserve hotels, private transport, and guided tours</p>
             </div>
             <div class="services-grid" id="servicesGrid"></div>
         </div>
     </section>
 
-    <!-- 5. Trip Planner Section (Week 4 Integrated) -->
-    <section id="planner" class="section">
+    <!-- Community Reviews Section -->
+    <section id="reviews" class="section">
         <div class="container">
             <div class="section-title">
-                <h2>Trip Planner</h2>
-                <p>Organize your day-by-day travel schedule</p>
+                <h2>Traveler Reviews & Feedback</h2>
+                <p>Authentic reviews submitted by platform users</p>
             </div>
+
+            <div class="review-form-card shadow-sm" style="margin-bottom: 30px;">
+                <h3>Submit Your Experience</h3>
+                <form id="reviewForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="revAuthor">Your Name *</label>
+                            <input type="text" id="revAuthor" required placeholder="e.g., Jane Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="revDestination">Destination *</label>
+                            <input type="text" id="revDestination" required placeholder="e.g., Hunza Valley">
+                        </div>
+                        <div class="form-group">
+                            <label for="revRating">Rating *</label>
+                            <select id="revRating" required>
+                                <option value="5">5 Stars - Outstanding</option>
+                                <option value="4">4 Stars - Excellent</option>
+                                <option value="3">3 Stars - Good</option>
+                                <option value="2">2 Stars - Fair</option>
+                                <option value="1">1 Star - Poor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="revComment">Review Comment *</label>
+                        <textarea id="revComment" rows="3" required placeholder="Share details about your trip..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Post Review</button>
+                </form>
+            </div>
+
+            <div class="reviews-feed" id="reviewsFeed"></div>
+        </div>
+    </section>
+
+    <!-- Trip Planner Section -->
+    <section id="planner" class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interactive Trip Planner</h2>
+                <p>Build and store your custom itineraries locally</p>
+            </div>
+
             <div class="planner-card shadow-sm">
                 <form id="tripForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="tripName">Trip Title *</label>
-                            <input type="text" id="tripName" placeholder="e.g., Hunza Autumn Expedition" required>
+                            <label for="tripName">Itinerary Name *</label>
+                            <input type="text" id="tripName" placeholder="e.g., Summer Northern Trek" required>
                         </div>
                         <div class="form-group">
-                            <label for="tripDestination">Destination *</label>
-                            <input type="text" id="tripDestination" placeholder="e.g., Hunza Valley" required>
+                            <label for="tripDestination">Target Destination *</label>
+                            <input type="text" id="tripDestination" placeholder="e.g., Skardu" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripDays">Duration (Days) *</label>
+                            <input type="number" id="tripDays" min="1" max="30" value="5" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-top:10px;">Save Itinerary Plan</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Save Itinerary</button>
                 </form>
             </div>
+
+            <div id="savedTripsContainer" class="saved-trips-grid" style="margin-top: 30px;"></div>
         </div>
     </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2>Ready to Start Your Journey?</h2>
+            <p>Save your plans, explore top destinations, and book curated experiences today.</p>
+            <a href="#explore" class="btn btn-outline" style="margin-top: 15px;"><i class="fa-solid fa-paper-plane"></i> Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Destination Detail Modal -->
+    <div id="detailModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content shadow-sm">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content shadow-sm">
+            <button class="modal-close" id="bookingModalCloseBtn">&times;</button>
+            <div id="bookingModalBody"></div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
